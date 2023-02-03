@@ -75,7 +75,7 @@ exports.viewTask = async (req, res) => {
     const {userId } = req.body;
 console.log(userId)
     try {
-        const saved = await taskModel.find({assignedTo:userId});
+        const saved = await taskModel.find({assignedTo:userId}).populate('assignedBy','username');
         res.json( {
             status: 201,
             message :{
