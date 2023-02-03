@@ -53,7 +53,7 @@ exports.allTask = async (req, res) => {
     // const {taskId , assignedTo} = req.body;
 
     try {
-        const saved = await taskModel.find();
+        const saved = await taskModel.find().populate('assignedBy','username');
         res.json( {
             status: 201,
             message :{
