@@ -6,7 +6,9 @@ const taskSchema = new mongoose.Schema({
         required: true,
         message: "task name required"
     },
-    assignedTo: { type: mongoose.Types.ObjectId, ref: 'users'}
+    assignedTo: { type: mongoose.Types.ObjectId, ref: 'users'},
+    assignedBy : { type: mongoose.Types.ObjectId, ref: 'users'}
+
 });
 
 module.exports = mongoose.model('tasks', taskSchema);

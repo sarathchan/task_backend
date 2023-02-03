@@ -25,9 +25,12 @@ exports.addTask =async (req, res) => {
 }
 
 exports.assignTask =async (req, res) => {
-    const {taskId , assignedTo} = req.body;
+    // const {taskId , assignedTo} = req.body;
+    const {taskId , assignedTo, assignedBy} = req.body;
+
     try {
-        const saved = await taskModel.updateOne({ _id: taskId } ,{ _id: taskId,assignedTo});
+        const saved = await taskModel.updateOne({ _id: taskId } ,{ _id: taskId,assignedTo,assignedBy});
+        // const saved = await taskModel.updateOne({ _id: taskId } ,{ _id: taskId,assignedTo});
         res.json( {
             status: 201,
             message :{
