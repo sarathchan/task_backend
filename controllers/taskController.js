@@ -1,4 +1,6 @@
 const taskModel = require('../models/taskModel.js');
+const mongoose = require('mongoose');
+
 // console.log(taskModel.insertMany());
 
 exports.addTask =async (req, res) => {
@@ -29,7 +31,7 @@ exports.assignTask =async (req, res) => {
     const {taskId , assignedTo, assignedBy} = req.body;
 
     try {
-        const saved = await taskModel.updateOne({ _id: taskId } ,{ _id: taskId,assignedTo,assignedBy});
+        const saved = await taskModel.updateOne({ _id: taskId } ,{ _id: taskId,assignedTo,assignedBy},{runValidators : true});
         // const saved = await taskModel.updateOne({ _id: taskId } ,{ _id: taskId,assignedTo});
         res.json( {
             status: 201,
@@ -40,6 +42,29 @@ exports.assignTask =async (req, res) => {
 
     }
     catch (err) {
+        res.json({
+            status: 400,
+            message: {
+                error : err.message
+            }
+        })
+    }
+}
+
+exports.taskDone = async (req,res)=> {
+    const {taskId} = req.body;
+
+    try{
+        console.log(taskId);
+        if (!taskId) throw new Error('Task id not provided');
+        // const taskDone = {}
+        const taskDone = await taskModel.updateOne({ _id: mongoose.Types.ObjectId(taskId) } ,{_id: mongoose.Types.ObjectId(taskId) , taskDone : true},{runValidators : true});
+        res.json( {
+            status: 201,
+            message : taskDone
+        })
+    }
+    catch(err){
         res.json({
             status: 400,
             message: {

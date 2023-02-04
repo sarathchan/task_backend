@@ -19,7 +19,6 @@ app.listen(3000, () => {
 
 
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb+srv://karthick:karthick@cluster0.keghdnv.mongodb.net/test', { useNewUrlParser: true, dbName: 'task_app' })
+mongoose.connect('mongodb+srv://karthick:karthick@cluster0.keghdnv.mongodb.net', { useNewUrlParser: true, dbName: 'task_app' })
     .then(() => console.log('connected to database'))
     .catch(() => console.log('not connected to database'));
-    
