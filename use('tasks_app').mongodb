@@ -1,0 +1,3 @@
+use('tasks_app')
+
+db.getCollectionInfos()

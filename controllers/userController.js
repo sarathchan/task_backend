@@ -1,5 +1,15 @@
 const userModel = require('../models/userModel.js');
+const jwt = require('jsonwebtoken');
+console.log(jwt);
+const {promisify} = require('util')
+
 // console.log(taskModel.insertMany());
+
+const signToken = async (id) => {
+    console.log(jwt);
+    const token = await promisify(jwt.sign)({id}, "visiyam top secret");
+    console.log(token);
+};
 
 exports.login =async (req, res) => {
     const { username,password } = req.body;
