@@ -96,6 +96,29 @@ exports.allTask = async (req, res) => {
         })
     }
 } 
+
+exports.Tasks = async (req, res) => {
+    // const {taskId , assignedTo} = req.body;
+
+    try {
+        const saved = await taskModel.find({taskDone : false}).populate('assignedBy','username');
+        res.json( {
+            status: 201,
+            message :{
+                tasks : saved
+            }
+        })
+
+    }
+    catch (err) {
+        res.json({
+            status: 400,
+            message: {
+                error : err.message
+            }
+        })
+    }
+} 
 exports.viewTask = async (req, res) => {
     const {userId } = req.body;
 console.log(userId)
