@@ -12,8 +12,8 @@ app.use(express.json());
 app.use('/task', taskRouter);
 app.use('/user', userRouter);
 
-app.listen(3000, () => {
-    console.log('started listening at port 3000');
+app.listen(3001, () => {
+    console.log('started listening at port 3001');
 })
 
 

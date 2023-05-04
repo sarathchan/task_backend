@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 exports.addTask =async (req, res) => {
     const body = req.body;
+    console.log(body);
     try {
         const doc = new taskModel(body);
         const saved = await doc.save();
@@ -29,9 +30,9 @@ exports.addTask =async (req, res) => {
 exports.assignTask =async (req, res) => {
     // const {taskId , assignedTo} = req.body;
     const {taskId , assignedTo, assignedBy} = req.body;
-
+    console.log(assignedBy ,'assoigned by')
     try {
-        const saved = await taskModel.updateOne({ _id: taskId } ,{ _id: taskId,assignedTo,assignedBy},{runValidators : true});
+        const saved = await taskModel.updateOne({ _id: taskId } ,{ _id: taskId,assignedTo,assignedBy},{runValidators : true,new : true});
         // const saved = await taskModel.updateOne({ _id: taskId } ,{ _id: taskId,assignedTo});
         res.json( {
             status: 201,
@@ -76,13 +77,15 @@ exports.taskDone = async (req,res)=> {
 
 exports.allTask = async (req, res) => {
     // const {taskId , assignedTo} = req.body;
+    const {Done = false} = req.query;
 
     try {
-        const saved = await taskModel.find().populate('assignedBy','username');
+        const tasks = await taskModel.find({taskDone : Done}).populate('assignedTo','username');
+        console.log(tasks);
         res.json( {
             status: 201,
             message :{
-                tasks : saved
+                tasks : tasks
             }
         })
 
@@ -101,7 +104,11 @@ exports.Tasks = async (req, res) => {
     // const {taskId , assignedTo} = req.body;
 
     try {
-        const saved = await taskModel.find({taskDone : false}).populate('assignedBy','username');
+        const saved = await taskModel.find({taskDone : false}).populate('assignedTo','username');
+        // const saved = await taskModel.find({taskDone : false}).populate('assignedBy','username');
+        // const saved = await taskModel.find({assignedTo:userId}).populate('assignedBy','username');
+
+        console.log(saved);
         res.json( {
             status: 201,
             message :{
